@@ -1,0 +1,11 @@
+CREATE TABLE Program (
+    id TEXT PRIMARY KEY,
+    title TEXT NOT NULL,
+    input TEXT NOT NULL
+);
+
+insertOrUpdate:
+INSERT OR REPLACE INTO Program(id, title, input) VALUES(?, ?, ?);
+
+selectAll:
+SELECT * FROM Program;
