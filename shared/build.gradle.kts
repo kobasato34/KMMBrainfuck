@@ -17,6 +17,15 @@ repositories {
 }
 kotlin {
     android()
+
+    // workaround for native database driver not found on ios
+    val onPhone = System.getenv("SDK_NAME")?.startsWith("iphoneos") ?: false
+    if (onPhone) {
+        iosArm64("ios")
+    } else {
+        iosX64("ios")
+    }
+
     ios {
         binaries {
             framework {
@@ -33,6 +42,7 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
                 implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
+                implementation( "com.squareup.sqldelight:coroutines-extensions:$sqlDelightVersion")
             }
         }
         val commonTest by getting {
@@ -92,6 +102,5 @@ tasks.getByName("build").dependsOn(packForXcode)
 sqldelight {
     database("AppDatabase") {
         packageName = "com.kobasato.kmmbrainfuck.shared.db"
-        sourceFolders = listOf("sqldelight")
     }
 }
