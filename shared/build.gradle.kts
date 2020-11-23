@@ -40,7 +40,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")  {
+                    isForce = true
+                }
                 implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
                 implementation( "com.squareup.sqldelight:coroutines-extensions:$sqlDelightVersion")
                 implementation("org.kodein.di:kodein-di:7.1.0")

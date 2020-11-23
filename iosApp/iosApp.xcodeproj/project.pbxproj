@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5AB2E1B9256B9DEA00C6E2A6 /* ProgramListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB2E1B8256B9DEA00C6E2A6 /* ProgramListView.swift */; };
+		5AB2E1BF256B9E0200C6E2A6 /* ProgramEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB2E1BE256B9E0200C6E2A6 /* ProgramEditorView.swift */; };
+		5AB2E1C3256B9E1400C6E2A6 /* ProgramListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB2E1C2256B9E1400C6E2A6 /* ProgramListViewModel.swift */; };
+		5AB2E1C7256B9E1E00C6E2A6 /* ProgramEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB2E1C6256B9E1E00C6E2A6 /* ProgramEditorViewModel.swift */; };
+		5AB2E1D0256BAACD00C6E2A6 /* NavigationLazyDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB2E1CF256BAACD00C6E2A6 /* NavigationLazyDestination.swift */; };
 		7555FF7F242A565900829871 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF7E242A565900829871 /* AppDelegate.swift */; };
 		7555FF81242A565900829871 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF80242A565900829871 /* SceneDelegate.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
@@ -51,6 +56,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5AB2E1B8256B9DEA00C6E2A6 /* ProgramListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramListView.swift; sourceTree = "<group>"; };
+		5AB2E1BE256B9E0200C6E2A6 /* ProgramEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramEditorView.swift; sourceTree = "<group>"; };
+		5AB2E1C2256B9E1400C6E2A6 /* ProgramListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramListViewModel.swift; sourceTree = "<group>"; };
+		5AB2E1C6256B9E1E00C6E2A6 /* ProgramEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramEditorViewModel.swift; sourceTree = "<group>"; };
+		5AB2E1CF256BAACD00C6E2A6 /* NavigationLazyDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLazyDestination.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF7E242A565900829871 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7555FF80242A565900829871 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -94,6 +104,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5AB2E1B7256B9DC400C6E2A6 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				5AB2E1B8256B9DEA00C6E2A6 /* ProgramListView.swift */,
+				5AB2E1BE256B9E0200C6E2A6 /* ProgramEditorView.swift */,
+				5AB2E1C2256B9E1400C6E2A6 /* ProgramListViewModel.swift */,
+				5AB2E1C6256B9E1E00C6E2A6 /* ProgramEditorViewModel.swift */,
+				5AB2E1CF256BAACD00C6E2A6 /* NavigationLazyDestination.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
 		7555FF72242A565900829871 = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +140,7 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				5AB2E1B7256B9DC400C6E2A6 /* Presentation */,
 				7555FF7E242A565900829871 /* AppDelegate.swift */,
 				7555FF80242A565900829871 /* SceneDelegate.swift */,
 				7555FF82242A565900829871 /* ContentView.swift */,
@@ -316,9 +339,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AB2E1C7256B9E1E00C6E2A6 /* ProgramEditorViewModel.swift in Sources */,
 				7555FF7F242A565900829871 /* AppDelegate.swift in Sources */,
 				7555FF81242A565900829871 /* SceneDelegate.swift in Sources */,
+				5AB2E1BF256B9E0200C6E2A6 /* ProgramEditorView.swift in Sources */,
+				5AB2E1D0256BAACD00C6E2A6 /* NavigationLazyDestination.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
+				5AB2E1B9256B9DEA00C6E2A6 /* ProgramListView.swift in Sources */,
+				5AB2E1C3256B9E1400C6E2A6 /* ProgramListViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,7 +443,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -469,7 +497,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
