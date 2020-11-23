@@ -12,23 +12,23 @@ import kotlinx.coroutines.launch
 
 class ProgramEditorViewModel(
     private val programService: ProgramService,
-    initialTitle: String,
-    initialInput: String
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(State())
     val state: StateFlow<State> = _state
 
-    init {
-        _state.value = _state.value.copy(title = initialTitle, input = initialInput)
+    fun load(program: Program) {
+        _state.value =
+            _state.value.copy(
+                program = program,
+                title = program.title,
+                input = program.input,
+                output = Output.Success(""),
+            )
     }
 
-    constructor(programService: ProgramService, program: Program) : this(
-        programService,
-        program.title,
-        program.input
-    ) {
-        _state.value = _state.value.copy(program = program)
+    fun clear() {
+        _state.value = State()
     }
 
     fun onTitleChange(value: String) {
