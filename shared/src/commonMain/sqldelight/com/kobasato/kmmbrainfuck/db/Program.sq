@@ -8,4 +8,4 @@ insertOrUpdate:
 INSERT OR REPLACE INTO Program(id, title, input) VALUES(?, ?, ?);
 
 selectAll:
-SELECT * FROM Program;
+SELECT * FROM Program ORDER BY title;
