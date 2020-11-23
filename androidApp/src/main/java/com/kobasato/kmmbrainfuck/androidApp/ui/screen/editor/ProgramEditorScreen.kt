@@ -25,50 +25,20 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.viewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import androidx.ui.tooling.preview.Preview
-import com.kobasato.kmmbrainfuck.androidApp.MyApp
-import com.kobasato.kmmbrainfuck.androidApp.ProgramServiceAmbient
 import com.kobasato.kmmbrainfuck.androidApp.ui.purple700
-import com.kobasato.kmmbrainfuck.db.Program
+import com.kobasato.kmmbrainfuck.androidApp.ui.screen.NavigationViewModel
+import com.kobasato.kmmbrainfuck.androidApp.ui.screen.Screen
 import com.kobasato.kmmbrainfuck.shared.brainfuck.Output
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import java.io.Serializable
-
-data class ProgramEditorArguments(
-    val id: String?,
-    val title: String,
-    val input: String,
-) : Serializable
 
 @ExperimentalCoroutinesApi
 @Composable
-fun ProgramEditorScreen(navController: NavController, arguments: ProgramEditorArguments) {
-    val programService = ProgramServiceAmbient.current
-    val viewModel: ProgramEditorViewModel = viewModel(factory = object : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return when (modelClass) {
-                ProgramEditorViewModel::class.java -> {
-                    if (arguments.id == null) {
-                        ProgramEditorViewModel(
-                            programService,
-                            arguments.title,
-                            arguments.input
-                        ) as T
-                    } else {
-                        val program = Program(arguments.id, arguments.title, arguments.input)
-                        ProgramEditorViewModel(programService, program) as T
-                    }
-                }
-                else -> throw RuntimeException("Cannot create an instance of $modelClass")
-            }
-        }
-    })
-    val state = viewModel.state.collectAsState()
+fun ProgramEditorScreen(
+    navigationViewModel: NavigationViewModel,
+    programEditorViewModel: ProgramEditorViewModel
+) {
+    val state = programEditorViewModel.state.collectAsState()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -76,37 +46,37 @@ fun ProgramEditorScreen(navController: NavController, arguments: ProgramEditorAr
                 backgroundColor = purple700,
                 navigationIcon = {
                     IconButton(onClick = {
-                        navController.popBackStack()
+                        navigationViewModel.navigateTo(Screen.List)
                     }) {
                         Icon(Icons.Filled.ArrowBack)
                     }
                 },
                 actions = {
                     Providers(AmbientContentAlpha provides ContentAlpha.high, children = {
-                        // Search icon
                         Icon(
                             asset = Icons.Outlined.Save,
                             modifier = Modifier
                                 .clickable(onClick = {
-                                    viewModel.saveProgram()
+                                    programEditorViewModel.saveProgram()
                                 })
                                 .padding(horizontal = 12.dp, vertical = 16.dp)
                                 .preferredHeight(24.dp)
                         )
                     })
-                })
+                },
+            )
         },
         bodyContent = {
             Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
                 ProgramEditor(state.value.title, state.value.input, {
-                    viewModel.onTitleChange(it)
+                    programEditorViewModel.onTitleChange(it)
                 }, {
-                    viewModel.onInputChange(it)
+                    programEditorViewModel.onInputChange(it)
                 })
                 Spacer(modifier = Modifier.preferredHeight(16.dp))
                 Button(
                     onClick = {
-                        viewModel.runProgram()
+                        programEditorViewModel.runProgram()
                     },
                     modifier = Modifier.fillMaxWidth(),
                 ) {
@@ -152,15 +122,5 @@ fun ProgramOutput(output: Output) {
         is Output.Error -> {
             Text(output.cause.message ?: "", color = Color.Red)
         }
-    }
-}
-
-@ExperimentalCoroutinesApi
-@Preview
-@Composable
-fun ProgramEditorScreenPreview() {
-    val navController = rememberNavController()
-    MyApp {
-        ProgramEditorScreen(navController, ProgramEditorArguments("id", "title", "input"))
     }
 }
