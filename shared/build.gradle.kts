@@ -34,7 +34,7 @@ kotlin {
         }
     }
 
-    val coroutinesVersion = "1.3.9-native-mt-2"
+    val coroutinesVersion = "1.4.1-native-mt"
     val sqlDelightVersion: String by project
 
     sourceSets {
@@ -75,11 +75,11 @@ kotlin {
     }
 }
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(30)
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdkVersion(24)
-        targetSdkVersion(29)
+        targetSdkVersion(30)
         versionCode = 1
         versionName = "1.0"
     }
@@ -87,6 +87,16 @@ android {
         getByName("release") {
             isMinifyEnabled = false
         }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "1.8"
+        useIR = true
     }
 }
 val packForXcode by tasks.creating(Sync::class) {
