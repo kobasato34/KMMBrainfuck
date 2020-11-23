@@ -32,18 +32,22 @@ class ProgramListViewModel: ObservableObject {
            editingProgram.id == program.id {
             return editingViewModel
         }
-
+        
         let editorViewModel = ProgramEditorViewModel(injector: Injector(), program: program)
         editingProgramEditorViewModel = editorViewModel
         return editorViewModel
     }
-
+    
     func createOrReuseProgramEditorViewModelNew() -> ProgramEditorViewModel {
         if let editingViewModel = editingProgramEditorViewModel {
             return editingViewModel
         }
-
-        let editorViewModel = ProgramEditorViewModel(injector: Injector(), initialTitle: "New Program", initialInput: "")
+        
+        let editorViewModel = ProgramEditorViewModel(
+            injector: Injector(),
+            initialTitle: "New Program",
+            initialInput: ""
+        )
         editingProgramEditorViewModel = editorViewModel
         return editorViewModel
     }

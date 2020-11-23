@@ -67,6 +67,12 @@ struct ProgramEditorView: View {
 
 struct ProgramEditorView_Previews: PreviewProvider {
     static var previews: some View {
-        ProgramEditorView(viewModel: ProgramEditorViewModel(injector: Injector(), initialTitle: "New program", initialInput: "input"))
+        ProgramEditorView(
+            viewModel: ProgramEditorViewModel(
+                injector: Injector(),
+                initialTitle: "New program",
+                initialInput: "input"
+            )
+        )
     }
 }

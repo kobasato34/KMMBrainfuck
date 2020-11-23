@@ -32,28 +32,30 @@ struct ProgramListView: View {
     }
     
     private func programListRow(_ program: Program) -> some View {
-        let vm = viewModel.createOrReuseProgramEditorViewModelEdit(program: program)
-        let programEditorView = ProgramEditorView(
-            viewModel: vm,
-            onDismiss:{
-                viewModel.clearEditingProgramEditorViewModel()
-            })
         return NavigationLink(
-            destination: NavigationLazyDestination(programEditorView),
+            destination: NavigationLazyDestination(
+                ProgramEditorView(
+                    viewModel: viewModel.createOrReuseProgramEditorViewModelEdit(program: program),
+                    onDismiss:{
+                        viewModel.clearEditingProgramEditorViewModel()
+                    }
+                )
+            ),
             label: {
                 Text(program.title)
             })
     }
     
     private func newProgramEditorLink() -> some View {
-        let vm = viewModel.createOrReuseProgramEditorViewModelNew()
-        let programEditorView = ProgramEditorView(
-            viewModel: vm,
-            onDismiss: {
-                viewModel.clearEditingProgramEditorViewModel()
-            })
         return NavigationLink(
-            destination: NavigationLazyDestination(programEditorView),
+            destination: NavigationLazyDestination(
+                ProgramEditorView(
+                    viewModel: viewModel.createOrReuseProgramEditorViewModelNew(),
+                    onDismiss: {
+                        viewModel.clearEditingProgramEditorViewModel()
+                    }
+                )
+            ),
             isActive: $viewModel.isNewEditorShowing,
             label: {
                 EmptyView()
@@ -69,6 +71,11 @@ struct ProgramListView_Previews: PreviewProvider {
     ]
     
     static var previews: some View {
-        ProgramListView(viewModel: ProgramListViewModel(injector: Injector(), initialProgramList: programList))
+        ProgramListView(
+            viewModel: ProgramListViewModel(
+                injector: Injector(),
+                initialProgramList: programList
+            )
+        )
     }
 }
