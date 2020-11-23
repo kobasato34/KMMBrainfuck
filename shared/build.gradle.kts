@@ -4,6 +4,7 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("kotlin-android-extensions")
+    id("com.squareup.sqldelight")
 }
 group = "com.kobasato.kmmbrainfuck"
 version = "1.0-SNAPSHOT"
@@ -16,6 +17,15 @@ repositories {
 }
 kotlin {
     android()
+
+    // workaround for native database driver not found on ios
+    val onPhone = System.getenv("SDK_NAME")?.startsWith("iphoneos") ?: false
+    if (onPhone) {
+        iosArm64("ios")
+    } else {
+        iosX64("ios")
+    }
+
     ios {
         binaries {
             framework {
@@ -23,8 +33,19 @@ kotlin {
             }
         }
     }
+
+    val coroutinesVersion = "1.3.9-native-mt-2"
+    val sqlDelightVersion: String by project
+
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+                implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
+                implementation( "com.squareup.sqldelight:coroutines-extensions:$sqlDelightVersion")
+                implementation("org.kodein.di:kodein-di:7.1.0")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
@@ -34,6 +55,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation("com.google.android.material:material:1.2.0")
+                implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
             }
         }
         val androidTest by getting {
@@ -42,7 +64,11 @@ kotlin {
                 implementation("junit:junit:4.12")
             }
         }
-        val iosMain by getting
+        val iosMain by getting {
+            dependencies {
+                implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
+            }
+        }
         val iosTest by getting
     }
 }
@@ -74,3 +100,8 @@ val packForXcode by tasks.creating(Sync::class) {
     into(targetDir)
 }
 tasks.getByName("build").dependsOn(packForXcode)
+sqldelight {
+    database("AppDatabase") {
+        packageName = "com.kobasato.kmmbrainfuck.shared.db"
+    }
+}
