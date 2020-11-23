@@ -34,7 +34,7 @@ kotlin {
         }
     }
 
-    val coroutinesVersion = "1.3.9-native-mt-2"
+    val coroutinesVersion = "1.4.1-native-mt"
     val sqlDelightVersion: String by project
 
     sourceSets {
