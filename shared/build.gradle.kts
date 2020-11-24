@@ -34,17 +34,16 @@ kotlin {
         }
     }
 
-    val coroutinesVersion = "1.4.1-native-mt"
     val sqlDelightVersion: String by project
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")  {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1-native-mt") {
                     isForce = true
                 }
                 implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
-                implementation( "com.squareup.sqldelight:coroutines-extensions:$sqlDelightVersion")
+                implementation("com.squareup.sqldelight:coroutines-extensions:$sqlDelightVersion")
                 implementation("org.kodein.di:kodein-di:7.1.0")
             }
         }
@@ -103,7 +102,8 @@ val packForXcode by tasks.creating(Sync::class) {
     val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
     val sdkName = System.getenv("SDK_NAME") ?: "iphonesimulator"
     val targetName = "ios" + if (sdkName.startsWith("iphoneos")) "Arm64" else "X64"
-    val framework = kotlin.targets.getByName<KotlinNativeTarget>(targetName).binaries.getFramework(mode)
+    val framework =
+        kotlin.targets.getByName<KotlinNativeTarget>(targetName).binaries.getFramework(mode)
     inputs.property("mode", mode)
     dependsOn(framework.linkTask)
     val targetDir = File(buildDir, "xcode-frameworks")
