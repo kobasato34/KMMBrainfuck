@@ -6,8 +6,7 @@ import org.kodein.di.direct
 import org.kodein.di.instance
 import org.kodein.di.bind
 
-@ThreadLocal
-object Injector {
+class Injector {
     private val container = DI.lazy {
         import(sharedModule)
         import(iosModule)

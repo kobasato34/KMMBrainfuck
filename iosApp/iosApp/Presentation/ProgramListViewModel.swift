@@ -16,6 +16,8 @@ class ProgramListViewModel: ObservableObject {
     @Published
     var isNewEditorShowing: Bool = false
     
+    private let injector: Injector
+    
     private let programService: ProgramService
     
     private var editingProgramEditorViewModel: ProgramEditorViewModel?
@@ -23,6 +25,7 @@ class ProgramListViewModel: ObservableObject {
     private var closeables: [Closeable] = []
     
     init(injector: Injector, initialProgramList: [Program]) {
+        self.injector = injector
         programList = initialProgramList
         programService = injector.programService()
         loadProgramList()
@@ -41,7 +44,7 @@ class ProgramListViewModel: ObservableObject {
             return editingViewModel
         }
         
-        let editorViewModel = ProgramEditorViewModel(injector: Injector(), program: program)
+        let editorViewModel = ProgramEditorViewModel(injector: injector, program: program)
         editingProgramEditorViewModel = editorViewModel
         return editorViewModel
     }
@@ -52,7 +55,7 @@ class ProgramListViewModel: ObservableObject {
         }
         
         let editorViewModel = ProgramEditorViewModel(
-            injector: Injector(),
+            injector: injector,
             initialTitle: "New Program",
             initialInput: ""
         )
