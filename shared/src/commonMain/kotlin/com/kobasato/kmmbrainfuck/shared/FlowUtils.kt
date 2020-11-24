@@ -8,6 +8,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
+interface Closeable {
+    fun close()
+}
+
 fun <T> Flow<T>.wrap(dispatcher: CoroutineDispatcher = Dispatchers.Main): CommonFlow<T> =
     CommonFlow(this, dispatcher)
 
