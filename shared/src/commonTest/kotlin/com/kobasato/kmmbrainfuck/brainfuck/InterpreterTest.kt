@@ -1,4 +1,4 @@
-package brainfuck
+package com.kobasato.kmmbrainfuck.brainfuck
 
 import com.kobasato.kmmbrainfuck.shared.brainfuck.Interpreter
 import com.kobasato.kmmbrainfuck.shared.brainfuck.Output
