@@ -1,12 +1,6 @@
 package com.kobasato.kmmbrainfuck.shared
 
 import com.kobasato.kmmbrainfuck.db.Program
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 class ProgramService(private val programRepository: ProgramRepository) {
     suspend fun saveProgram(title: String, input: String): Program {
@@ -21,24 +15,9 @@ class ProgramService(private val programRepository: ProgramRepository) {
         return program
     }
 
-    fun getPrograms(): Flow<List<Program>> {
-        return programRepository.getAll()
-    }
-
-    // for iOS
-    fun getPrograms(block: (List<Program>) -> Unit): Closeable {
-        val job = Job()
-
-        getPrograms()
-            .onEach {
-                block(it)
-            }
-            .launchIn(CoroutineScope(Dispatchers.Main + job))
-
-        return object : Closeable {
-            override fun close() {
-                job.cancel()
-            }
-        }
+    fun getPrograms(): CommonFlow<List<Program>> {
+        return programRepository
+            .getAll()
+            .wrap()
     }
 }
