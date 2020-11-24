@@ -72,11 +72,11 @@ class ProgramListViewModel: ObservableObject {
     }
     
     private func loadProgramList() {
-        let closeable = programService.getPrograms().watch(block: { [weak self] result in
+        let closeable = programService.getPrograms().watch { [weak self] result in
             if let programList = result as? [Program] {
                 self?.programList = programList
             }
-        })
+        }
         closeables.append(closeable)
     }
 }
