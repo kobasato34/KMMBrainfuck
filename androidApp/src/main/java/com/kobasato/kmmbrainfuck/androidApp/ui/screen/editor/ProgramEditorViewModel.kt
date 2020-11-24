@@ -50,7 +50,7 @@ class ProgramEditorViewModel(
             if (program == null) {
                 programService.saveProgram(_state.value.title, _state.value.input)
             } else {
-                programService.updateProgram(program, _state.value.input)
+                programService.updateProgram(program, _state.value.title, _state.value.input)
             }
         }
     }

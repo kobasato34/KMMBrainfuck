@@ -45,7 +45,7 @@ class ProgramEditorViewModel: ObservableObject {
     
     func saveProgram() {
         if let program = program {
-            programService.updateProgram(program: program, newInput: input) { result, error in
+            programService.updateProgram(program: program, newTitle: title, newInput: input) { result, error in
                 self.program = result
             }
         } else {

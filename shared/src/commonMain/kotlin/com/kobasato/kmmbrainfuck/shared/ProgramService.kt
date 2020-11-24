@@ -9,8 +9,8 @@ class ProgramService(private val programRepository: ProgramRepository) {
         return program
     }
 
-    suspend fun updateProgram(program: Program, newInput: String): Program {
-        val updatedProgram = program.copy(input = newInput)
+    suspend fun updateProgram(program: Program, newTitle: String, newInput: String): Program {
+        val updatedProgram = program.copy(title = newTitle, input = newInput)
         programRepository.addOrUpdate(updatedProgram)
         return program
     }
