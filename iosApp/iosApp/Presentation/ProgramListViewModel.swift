@@ -20,10 +20,18 @@ class ProgramListViewModel: ObservableObject {
     
     private var editingProgramEditorViewModel: ProgramEditorViewModel?
     
+    private var closeables: [Closeable] = []
+    
     init(injector: Injector, initialProgramList: [Program]) {
         programList = initialProgramList
         programService = injector.programService()
         loadProgramList()
+    }
+    
+    deinit {
+        for closeable in closeables {
+            closeable.close()
+        }
     }
     
     func createOrReuseProgramEditorViewModelEdit(program: Program) -> ProgramEditorViewModel {
@@ -61,8 +69,11 @@ class ProgramListViewModel: ObservableObject {
     }
     
     private func loadProgramList() {
-        programService.getPrograms { [weak self] list in
-            self?.programList = list
-        }
+        let closeable = programService.getPrograms().watch(block: { [weak self] result in
+            if let programList = result as? [Program] {
+                self?.programList = programList
+            }
+        })
+        closeables.append(closeable)
     }
 }
