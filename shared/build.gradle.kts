@@ -56,14 +56,13 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation("com.google.android.material:material:1.2.0")
                 implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
             }
         }
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.12")
+                implementation("junit:junit:4.13.1")
             }
         }
         val iosMain by getting {
